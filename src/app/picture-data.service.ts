@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import {Router} from '@angular/router';
+
 import{ImageData} from './classes';
 
 @Injectable({
@@ -9,14 +11,23 @@ export class PictureDataService {
 
 	imageData: ImageData;
 
-	constructor() { }
+	constructor(
+		private router: Router
+	) { }
 
 	SaveImageData(reader: FileReader, file: any) {
 		this.imageData = new ImageData;
 		this.imageData.fileName = file.name;
 		this.imageData.fileType = file.type;
 		this.imageData.value = String(reader.result);
-		console.log(file);
-		console.log(reader.result);
+	}
+
+	GetImageValue() {
+		if(!this.imageData) {
+			this.router.navigateByUrl('/');
+		}
+		else {
+			return(this.imageData.value);
+		}
 	}
 }

@@ -1,4 +1,21 @@
 <app-header></app-header>
 <app-instructions></app-instructions>
 
-<canvas id="canvas" width="1000" height="10000"></canvas>
+<div *ngIf="img.width > 0"> 
+	<p>Your image is {{img.width}} pixels wide and {{img.height}} pixels high. 
+		<span *ngIf="img.width > 1000 || img.height > 1000">
+			We've scaled it down in the display below, but you will be able to download the full resolution image at the end.  
+		</span>
+		You can use the slider to set your dice dimensions.  Bigger number = bigger dice.
+	</p>
+
+	<div class="slidecontainer">
+		<label>Dice Dimensions: 
+			<input type="range" min="10" max="{{minDim/10}}" value="10" class="slider" id="range">
+		</label>
+		<span id="dimsDisplay"></span>
+	</div>
+
+</div>
+
+<canvas id="canvas" width="1000" height="1000"></canvas>
