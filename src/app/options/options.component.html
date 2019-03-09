@@ -11,7 +11,7 @@
 
 	<div class="slidecontainer">
 		<label>Dice Dimensions: 
-			<input type="range" min="10" max="{{minDim/10}}" value="10" class="slider" id="range">
+			<input type="range" min="10" max="{{minDim/10}}" value="10" class="slider" (change)="UpdateValue($event)">
 		</label>
 		<span id="dimsDisplay"></span>
 	</div>
