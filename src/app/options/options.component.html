@@ -10,9 +10,10 @@
 	</p>
 
 	<div class="slidecontainer">
-		<label>Dice Dimensions: 
+		<label>Dice Dimensions (Current Value: {{diceDim}} pixels wide/high): 
 			<input type="range" min="10" max="{{minDim/10}}" value="10" class="slider" (change)="UpdateValue($event)">
 		</label>
+		<button class='btn btn-success' (click)='handleSubmit()'>Dice-ify!</button>
 		<span id="dimsDisplay"></span>
 	</div>
 

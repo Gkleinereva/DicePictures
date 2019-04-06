@@ -10,6 +10,7 @@ import{ImageData} from './classes';
 export class PictureDataService {
 
 	imageData: ImageData;
+	diceDims: number;
 
 	constructor(
 		private router: Router
@@ -29,5 +30,30 @@ export class PictureDataService {
 		else {
 			return(this.imageData.value);
 		}
+	}
+
+	setImageDims(fW: number, fH: number, sW: number, sH: number): void {
+		this.imageData.fWidth = fW;
+		this.imageData.fHeight = fH;
+		this.imageData.sWidth = sW;
+		this.imageData.sHeight = sH;
+	}
+
+	setDiceDims(dim: number): void {
+		this.diceDims = dim;
+		this.processImage();
+		this.router.navigate(['/likeOmgMyPictureIsPrettyDicey']);
+	}
+
+	// Make the big ones on an 'invisible' canvas
+	// 
+	// How to save canvas as an Image:
+	// https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL
+	processImage(): void {
+		console.log(this.imageData);
+	}
+
+	getImageData(): ImageData {
+		return this.imageData;
 	}
 }

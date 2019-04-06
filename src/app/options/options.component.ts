@@ -14,11 +14,12 @@ export class OptionsComponent implements OnInit {
 	diceDim: number;
 	
 	constructor(
-		private pictureDataService: PictureDataService,
+		private pictureDataService: PictureDataService
 	) { }
 
 	ngOnInit() {
 
+		this.diceDim = 10;
 		this.img = new Image();
 		this.img.src = this.pictureDataService.GetImageValue();
 
@@ -47,13 +48,23 @@ export class OptionsComponent implements OnInit {
 			}
 			this.minDim = Math.min(this.img.width, this.img.height);
 
-			// console.log("width: " + this.img.width + ", height: " + this.img.height);
+			console.log("width: " + this.img.width + ", height: " + this.img.height);
+			this.pictureDataService.setImageDims(
+				this.img.width,
+				this.img.height,
+				drawWidth,
+				drawHeight
+			);
 			context.drawImage(this.img, 0, 0, drawWidth, drawHeight);
 		}
 	}
 
 	UpdateValue(event) {
+		this.diceDim = event.target.value;
+	}
 
+	handleSubmit() {
+		this.pictureDataService.setDiceDims(this.diceDim); 
 	}
 
 }

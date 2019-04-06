@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { InstructionsComponent } from './instructions/instructions.component';
 import { UploadComponent } from './upload/upload.component';
 import { OptionsComponent } from './options/options.component';
+import { OutputComponent } from './output/output.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { OptionsComponent } from './options/options.component';
     HeaderComponent,
     InstructionsComponent,
     UploadComponent,
-    OptionsComponent
+    OptionsComponent,
+    OutputComponent
   ],
   imports: [
     BrowserModule,
