@@ -1,4 +1,26 @@
 <app-header></app-header>
-<canvas *ngIf='imageData' id='ogImg' width={{imageData.fWidth}} height={{imageData.fHeight}}>
 
-</canvas> 
+<div class='output'>
+
+  <div class='img-container'>
+    <img id='d1' src='assets/di1.png'>
+    <img id='d2' src='assets/di2.png'>
+    <img id='d3' src='assets/di3.png'>
+    <img id='d4' src='assets/di4.png'>
+    <img id='d5' src='assets/di5.png'>
+    <img id='d6' src='assets/di6.png'>
+  </div>
+
+  <canvas *ngIf='imageData' id='ogImg' width={{imageData.fWidth}} height={{imageData.fHeight}}>
+
+  </canvas>
+
+  <div class='buttons'>
+    <button class='btn btn-primary' (click)='downloadImage()'>Download</button>
+  </div>
+
+  <canvas *ngIf='imageData' id='diceImg' width={{imageData.fWidth}} height={{imageData.fHeight}}>
+
+  </canvas>
+
+</div> 

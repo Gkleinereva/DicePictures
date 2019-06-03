@@ -1,3 +1,11 @@
 #ogImg {
     display: none;
 }
+
+.img-container > img {
+    display: none;
+}
+
+.output {
+    margin-top: 60px;
+}

@@ -41,7 +41,6 @@ export class PictureDataService {
 
 	setDiceDims(dim: number): void {
 		this.diceDims = dim;
-		this.processImage();
 		this.router.navigate(['/likeOmgMyPictureIsPrettyDicey']);
 	}
 
@@ -49,9 +48,6 @@ export class PictureDataService {
 	// 
 	// How to save canvas as an Image:
 	// https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL
-	processImage(): void {
-		console.log(this.imageData);
-	}
 
 	getImageData(): ImageData {
 		return this.imageData;

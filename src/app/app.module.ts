@@ -9,6 +9,9 @@ import { UploadComponent } from './upload/upload.component';
 import { OptionsComponent } from './options/options.component';
 import { OutputComponent } from './output/output.component';
 
+import{MatProgressSpinnerModule} from '@angular/material';
+import{BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,9 +23,11 @@ import { OutputComponent } from './output/output.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
-  ],
+    AppRoutingModule,
+    MatProgressSpinnerModule,
+    BrowserAnimationsModule
+  ], 
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { } 

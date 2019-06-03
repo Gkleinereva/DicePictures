@@ -12,6 +12,8 @@ export class OptionsComponent implements OnInit {
 	img: any;
 	minDim: number;
 	diceDim: number;
+
+	submitted: boolean = false;
 	
 	constructor(
 		private pictureDataService: PictureDataService
@@ -59,12 +61,13 @@ export class OptionsComponent implements OnInit {
 		}
 	}
 
-	UpdateValue(event) {
+	updateValue(event) {
 		this.diceDim = event.target.value;
 	}
 
 	handleSubmit() {
-		this.pictureDataService.setDiceDims(this.diceDim); 
+		this.pictureDataService.setDiceDims(this.diceDim);
+		this.submitted = true;
 	}
 
 }
