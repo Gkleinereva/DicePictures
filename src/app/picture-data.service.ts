@@ -11,6 +11,7 @@ export class PictureDataService {
 
 	imageData: ImageData;
 	diceDims: number;
+	diceType: string;
 
 	constructor(
 		private router: Router
@@ -43,6 +44,10 @@ export class PictureDataService {
 		this.diceDims = dim;
 		this.router.navigate(['/likeOmgMyPictureIsPrettyDicey']);
 	}
+
+	setDiceType(type: string): void {
+		this.diceType = type;
+	} 
 
 	// Make the big ones on an 'invisible' canvas
 	// 

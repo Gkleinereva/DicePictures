@@ -36,3 +36,7 @@
 	background: #4CAF50; /* Green background */
 	cursor: pointer; /* Cursor on hover */
 }
+
+.mat-radio-button ~ .mat-radio-button {
+	margin-left: 16px;
+}

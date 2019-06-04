@@ -8,10 +8,16 @@
 		</span>
 		You can use the slider to set your dice dimensions.  Bigger number = bigger dice.
 	</p>
+  
+  <mat-radio-group [(ngModel)]='diceType' aria-label='Which dice do you want in your picture?'>
+    <mat-radio-button value='white'>White Dice</mat-radio-button>
+    <mat-radio-button value='black'>Black Dice</mat-radio-button>
+    <mat-radio-button value='both'>Both</mat-radio-button>
+  </mat-radio-group>
 
 	<div class="slidecontainer">
 		<label>Dice Dimensions (Current Value: {{diceDim}} pixels wide/high): 
-			<input type="range" min="10" max="{{minDim/20}}" value="10" class="slider" (input)="updateValue($event)">
+			<input type="range" min="10" max="{{minDim/20}}" value="20" class="slider" (input)="updateValue($event)">
 		</label>
 		<button *ngIf='!submitted' class='btn btn-success' (click)='handleSubmit()'>Dice-ify!</button>
 		<mat-spinner *ngIf='submitted'></mat-spinner>

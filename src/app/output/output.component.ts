@@ -14,6 +14,7 @@ import {saveAs} from 'file-saver';
 export class OutputComponent implements OnInit, AfterViewInit {
 
   diceDims: number;
+  diceType: string;
   
   imageData: ImageData;
   pixelData: Uint8ClampedArray;
@@ -27,7 +28,7 @@ export class OutputComponent implements OnInit, AfterViewInit {
 
   ready: boolean = false;
   imgScaled: boolean;
-  imagesLoaded: boolean[] = [false, false, false, false, false, false];
+  imagesLoaded: boolean[] = [false, false, false, false, false, false, false, false, false, false, false, false];
 
   constructor(
     private pictureDataService: PictureDataService,
@@ -41,9 +42,10 @@ export class OutputComponent implements OnInit, AfterViewInit {
     }
 
     this.diceDims = this.pictureDataService.diceDims;
+    this.diceType = this.pictureDataService.diceType;
 
     let i = 0;
-    while(i < 6) {
+    while(i < 12) {
       (function(i) {
         let img = document.getElementById('d' + (i + 1));
         img.onload = function() {
@@ -60,7 +62,13 @@ export class OutputComponent implements OnInit, AfterViewInit {
     this.initializeOriginalImage();
     this.calculateGreyScaleData();
     this.calculateBlockGreyScaleData();
-    this.calculateDiceThresholds();
+    // this.calculateTwelveDiceThresholds();
+    if(this.diceType === 'black' || this.diceType === 'white') {
+      this.calculateDiceThresholds(6);
+    }
+    else {
+      this.calculateDiceThresholds(12);
+    }
     // this.setStaticDiceThresholds();
   }
 
@@ -78,7 +86,16 @@ export class OutputComponent implements OnInit, AfterViewInit {
     }
 
     if(ready) {
-      this.drawImages();
+      if(this.diceType === 'both') {
+        this.drawImages(1, 12);
+      }
+      else if(this.diceType === 'white') {
+        this.drawImages(1, 6)
+      }
+      else {
+        this.drawImages(7, 12)
+      }
+      // this.drawTwelveImages();
       this.scaleCanvas();
     }
   }
@@ -158,56 +175,44 @@ export class OutputComponent implements OnInit, AfterViewInit {
     }
   }
 
-  calculateDiceThresholds() {
-    // C) Then we sort that array into a new array, and figure out our thresholds
+  // Sort our array of grey scale blocks into a new array, and figure out our thresholds
+  calculateDiceThresholds(numBuckets: number) {
     this.sortedGreyScaleBlockData = this.greyScaleBlockData.slice();
     this.sortedGreyScaleBlockData.sort((a, b) => {
       return (a - b);
     });
 
     let i = 0;
-    while(i < 5) {
+    while(i < numBuckets - 1) {
       this.thresholds.push(this.sortedGreyScaleBlockData[
-        (i + 1)*Math.floor(this.sortedGreyScaleBlockData.length/6)
+        (i + 1)*Math.floor(this.sortedGreyScaleBlockData.length/numBuckets)
       ]);
       i++;
     }
+
+    // Add the limit threshold for better looping logic in draw functions
+    this.thresholds.push(256);
   }
 
-  setStaticDiceThresholds() {
-    this.thresholds = [42, 84, 129, 171, 213]
-  }
-
-  drawImages() {
-    // D) Then we use the results from C and the data in B to draw the right die
-    // in each place
-
+  // Draw the right die in each spot based on threshold calculations
+  // Parameters are a number 1-12
+  drawImages(startDieIndex: number, endDieIndex: number) {
     let outCanvas = <HTMLCanvasElement> document.getElementById('diceImg');
     let outContext = outCanvas.getContext('2d');
 
-    let x, y, imgId, img;
+    let x, y, imgId, img, j;
     let i = 0;
     while(i < this.greyScaleBlockData.length) {
       y = Math.floor(i/(Math.floor(this.imageData.fWidth/this.diceDims)))*this.diceDims;
       x = (i*this.diceDims)%(Math.floor(this.imageData.fWidth/this.diceDims)*this.diceDims);
 
-      if(this.greyScaleBlockData[i] < this.thresholds[0]) {
-        imgId = 'd6';
-      }
-      else if(this.greyScaleBlockData[i] < this.thresholds[1]) {
-        imgId = 'd5';
-      }
-      else if(this.greyScaleBlockData[i] < this.thresholds[2]) {
-        imgId = 'd4';
-      }
-      else if(this.greyScaleBlockData[i] < this.thresholds[3]) {
-        imgId = 'd3';
-      }
-      else if(this.greyScaleBlockData[i] < this.thresholds[4]) {
-        imgId = 'd2';
-      }
-      else {
-        imgId = 'd1';
+      j = startDieIndex - 1;
+      while(j < endDieIndex) {
+        if(this.greyScaleBlockData[i] < this.thresholds[j - startDieIndex + 1]) {
+          imgId = 'd' + (endDieIndex - j + startDieIndex - 1);
+          break;
+        }
+        j++;
       }
 
       img = document.getElementById(imgId);
@@ -216,7 +221,6 @@ export class OutputComponent implements OnInit, AfterViewInit {
     }
 
     this.ready = true;
-
   }
 
   scaleCanvas() {

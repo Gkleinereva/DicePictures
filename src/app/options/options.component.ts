@@ -13,6 +13,9 @@ export class OptionsComponent implements OnInit {
 	minDim: number;
 	diceDim: number;
 
+	// 'white', 'black', or 'both'
+	diceType: string;
+
 	submitted: boolean = false;
 	
 	constructor(
@@ -21,7 +24,8 @@ export class OptionsComponent implements OnInit {
 
 	ngOnInit() {
 
-		this.diceDim = 10;
+		this.diceDim = 20;
+		this.diceType = 'both';
 		this.img = new Image();
 		this.img.src = this.pictureDataService.GetImageValue();
 
@@ -66,6 +70,7 @@ export class OptionsComponent implements OnInit {
 
 	handleSubmit() {
 		this.pictureDataService.setDiceDims(this.diceDim);
+		this.pictureDataService.setDiceType(this.diceType);
 		this.submitted = true;
 	}
 
