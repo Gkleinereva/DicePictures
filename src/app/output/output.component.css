@@ -2,10 +2,18 @@
     display: none;
 }
 
+#diceImg {
+    display: none;
+}
+
 .img-container > img {
     display: none;
 }
 
 .output {
     margin-top: 60px;
+}
+
+.scaled-note {
+    font-style: italic;
 }

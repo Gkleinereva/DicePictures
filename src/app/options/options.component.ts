@@ -50,7 +50,6 @@ export class OptionsComponent implements OnInit {
 			}
 			this.minDim = Math.min(this.img.width, this.img.height);
 
-			console.log("width: " + this.img.width + ", height: " + this.img.height);
 			this.pictureDataService.setImageDims(
 				this.img.width,
 				this.img.height,

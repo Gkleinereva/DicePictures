@@ -16,10 +16,20 @@
   </canvas>
 
   <div class='buttons'>
-    <button class='btn btn-primary' (click)='downloadImage()'>Download</button>
+    <mat-spinner *ngIf='!ready'></mat-spinner>
+    <button *ngIf='ready' class='btn btn-primary' (click)='downloadImage()'>Download</button>
+    <p *ngIf='imgScaled' class='scaled-note'>
+      Note: The preview you see below is distorted because it was scaled to fit on your screen.
+      Click 'Download' to see the full resolution image!  
+    </p>
   </div>
 
+  <!-- Canvas with the 'actual image' -->
   <canvas *ngIf='imageData' id='diceImg' width={{imageData.fWidth}} height={{imageData.fHeight}}>
+
+  </canvas>
+
+  <canvas *ngIf='imageData' id='scaledImg' width={{imageData.sWidth}} height={{imageData.sHeight}}>
 
   </canvas>
 

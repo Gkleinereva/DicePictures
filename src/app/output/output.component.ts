@@ -25,6 +25,8 @@ export class OutputComponent implements OnInit, AfterViewInit {
 
   thresholds: number[] = [];
 
+  ready: boolean = false;
+  imgScaled: boolean;
   imagesLoaded: boolean[] = [false, false, false, false, false, false];
 
   constructor(
@@ -34,7 +36,6 @@ export class OutputComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.imageData = this.pictureDataService.getImageData();
-    console.log(this.imageData);
     if(!this.imageData) {
       this.router.navigate(['']);
     }
@@ -78,6 +79,7 @@ export class OutputComponent implements OnInit, AfterViewInit {
 
     if(ready) {
       this.drawImages();
+      this.scaleCanvas();
     }
   }
 
@@ -213,6 +215,25 @@ export class OutputComponent implements OnInit, AfterViewInit {
       i++;
     }
 
+    this.ready = true;
+
+  }
+
+  scaleCanvas() {
+    
+    // These 2 type declarations are apparently equivalent.
+    let fullImageCanvas = <HTMLCanvasElement> document.getElementById('diceImg');
+    let scaledImageCanvas = document.getElementById('scaledImg') as HTMLCanvasElement;
+    let scaledImageContext = scaledImageCanvas.getContext('2d');
+
+    // If we had to scale the image, scale the preview
+    this.imgScaled = false;
+    if(this.imageData.sWidth < this.imageData.fWidth) {
+      this.imgScaled = true;
+      scaledImageContext.scale(this.imageData.sWidth/this.imageData.fWidth, this.imageData.sWidth/this.imageData.fWidth);
+    }
+
+    scaledImageContext.drawImage(fullImageCanvas, 0, 0);
   }
 
   downloadImage() {
